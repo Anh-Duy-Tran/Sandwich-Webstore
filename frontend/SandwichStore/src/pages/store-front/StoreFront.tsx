@@ -1,37 +1,25 @@
-import React, { useContext } from 'react'
-import Navbar from '../../components/Navbar';
-import { Container, Typography } from '@mui/material';
-import { ImageSlider } from '../../components/ImageSlider';
-import { StoreContext } from '../../context/StoreProvider';
-
-
+import React, { useContext } from "react";
+import Navbar from "../../components/Navbar";
+import { ImageSlider } from "../../components/ImageSlider";
+import { StoreMenu } from "../../components/StoreMenu";
+import LoginModal from "../../components/LoginModal";
+import { Box, Fab } from "@mui/material";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export const StoreFront: React.FC = ({}) => {
-  const { state, dispatch } = useContext(StoreContext);
-
   return (
-    <>
-      <Navbar/>
-      <ImageSlider/>
-      <Container sx={{height: "1000px" }}>
-        {
-          state.sandwiches.map(
-            sandwich => {
-              console.log(sandwich);
-              return (
-                <>
-                  <Typography>
-                    {sandwich.name}
-                  </Typography>
-                </>
-              )
-            }
-          )
-        }
-        <Typography>
-          Cua hang banh mi Quyen Tran
-        </Typography>
-      </Container>
-    </>
+    <Box sx={{ position: "relative" }}>
+      <Navbar />
+      <LoginModal />
+      <ImageSlider />
+      <StoreMenu />
+      <Fab
+        variant="extended"
+        sx={{ mr: 3, mb: 2, position: "fixed", bottom: "0px", right: "0px" }}
+      >
+        <ShoppingCartIcon/>
+        Cart
+      </Fab>
+    </Box>
   );
-}
+};

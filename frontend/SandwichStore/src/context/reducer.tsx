@@ -16,7 +16,9 @@ export interface Sandwich {
 }
 
 export type Action = 
-  { type: "set-sandwiches", payload: Sandwich[] }
+  | { type: "set-sandwiches", payload: Sandwich[] }
+  | { type: "open-login" }
+  | { type: "close-login" }
 
 export const reducer = (
   state: StoreStateType,
@@ -31,6 +33,20 @@ export const reducer = (
       }
     }
 
+    case "open-login" : {
+      return {
+        ...state,
+        openLogin : true
+      }
+    }
+
+    case "close-login" : {
+      return {
+        ...state,
+        openLogin : false
+      }
+    }
+
     default:
       return {
         ...state
@@ -39,11 +55,13 @@ export const reducer = (
 }
 
 export interface StoreStateType {
+  openLogin: boolean;
   sandwiches : Array<Sandwich>;
 
 }
 
 export const initialState: StoreStateType = {
+  openLogin: false,
   sandwiches: []
 }
 
