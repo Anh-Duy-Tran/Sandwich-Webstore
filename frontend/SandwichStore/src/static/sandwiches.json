@@ -1,0 +1,84 @@
+[
+  {
+    "id_": "sw123",
+    "name": "Turkey Club",
+    "price": 8.99,
+    "image": "https://example.com/turkey-club.jpg",
+    "description": "A classic sandwich with turkey, bacon, lettuce, and tomato on toasted bread",
+    "toppings": [
+      { "id": "Mayonnaise", "isVegetarian": true },
+      { "id": "Mustard", "isVegetarian": true },
+      { "id": "Cheese", "isVegetarian": false },
+      { "id": "Avocado", "isVegetarian": true }
+    ],
+    "breadType": "Whole Wheat"
+  },
+  
+  {
+    "id_": "sw456",
+    "name": "BLT",
+    "price": 6.99,
+    "image": "https://example.com/blt.jpg",
+    "description": "A classic sandwich with bacon, lettuce, and tomato on toasted bread",
+    "toppings": [
+      { "id": "Mayonnaise", "isVegetarian": true },
+      { "id": "Mustard", "isVegetarian": true },
+      { "id": "Cheese", "isVegetarian": false }
+    ],
+    "breadType": "White"
+  },
+
+  {
+    "id_": "sw789",
+    "name": "Grilled Cheese",
+    "price": 4.99,
+    "image": "https://example.com/grilled-cheese.jpg",
+    "description": "A simple sandwich with melted cheese between two slices of bread",
+    "toppings": [
+      { "id": "Butter", "isVegetarian": true },
+      { "id": "Tomato Soup", "isVegetarian": true }
+    ],
+    "breadType": "Sourdough"
+  },
+
+  {
+    "id_": "sw012",
+    "name": "Reuben",
+    "price": 9.99,
+    "image": "https://example.com/reuben.jpg",
+    "description": "A sandwich with corned beef, sauerkraut, Swiss cheese, and Russian dressing on rye bread",
+    "toppings": [
+      { "id": "Russian Dressing", "isVegetarian": true },
+      { "id": "Sauerkraut", "isVegetarian": true }
+    ],
+    "breadType": "Rye"
+  },
+
+  {
+    "id_": "sw345",
+    "name": "Chicken Caesar Wrap",
+    "price": 7.99,
+    "image": "https://example.com/chicken-caesar-wrap.jpg",
+    "description": "A wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing",
+    "toppings": [
+      { "id": "Caesar Dressing", "isVegetarian": true },
+      { "id": "Parmesan Cheese", "isVegetarian": false },
+      { "id": "Tomato", "isVegetarian": true }
+    ],
+    "breadType": "Wrap"
+  },
+
+  {
+    "id_": "sw678",
+    "name": "Tuna Salad",
+    "price": 6.99,
+    "image": "https://example.com/tuna-salad.jpg",
+    "description": "A sandwich with tuna salad, lettuce, and tomato on toasted bread",
+    "toppings": [
+      { "id": "Mayonnaise", "isVegetarian": true },
+      { "id": "Celery", "isVegetarian": true },
+      { "id": "Onion", "isVegetarian": true }
+    ],
+    "breadType": "Multigrain"
+  }
+]

@@ -1,19 +1,18 @@
 type OrderStatus = "ordered" | "received" | "inQueue" | "ready" | "failed";
 
-type BreadType = "oat" | "rye" | "wheat"
-
 interface Topping {
-  id: string
+  id: string;
+  [extraProps: string]: any; // Define an indexer for extra properties
 }
 
 export interface Sandwich {
   id_: string;
   name: string;
   price: number;
-  image: URL;
+  image: string;
   description: string;
   toppings: Array<Topping>;
-  breadType: BreadType;
+  breadType: string;
 }
 
 export type Action = 
@@ -27,7 +26,8 @@ export const reducer = (
   switch (action.type) {
     case "set-sandwiches": {
       return {
-        ...state
+        ...state,
+        sandwiches: [ ...action.payload ]
       }
     }
 

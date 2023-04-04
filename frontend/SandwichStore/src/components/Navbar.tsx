@@ -35,7 +35,7 @@ export default function Navbar() {
     <React.Fragment>
       <CssBaseline />
       <ElevationScroll>
-        <AppBar sx={{ backgroundColor: trigger ? "white" : "transparent"}}>
+        <AppBar sx={{ backgroundColor: trigger ? "rgba(255,255,255,0.7)" : "transparent"}}>
           <Toolbar>
             <img src={Logo} style={{ width: "200px" }} ></img>
           </Toolbar>
