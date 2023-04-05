@@ -4,12 +4,7 @@ require('dotenv').config();
 const connectDB = () => {
   //   console.log(process.env.DATABASE_URL);
   mongoose
-    .connect('mongodb://localhost:27017/WebShopDb', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    })
+    .connect('mongodb://localhost:27017/WebShopDb')
     .then(() => {
       console.log('DB connected');
     })
