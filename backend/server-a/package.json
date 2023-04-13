@@ -4,7 +4,8 @@
   "description": "This directory is for the code and documentation of the _server A_. A starter Dockerfile has been added, it has some comments to get you started.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kill": "kill -9 $(lsof -ti:3000)"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "swagger-tools": "^0.10.4"
   }

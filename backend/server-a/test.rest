@@ -9,8 +9,39 @@ GET http://localhost:3000/api/v1/sandwich/642cb366a36f7d2514e90556
 ----------------------------------------------------------------
 // get all users
 ###
-GET http://localhost:3000/api/v1/users
+GET http://localhost:3000/api/v1/user
 
 //get user based on id
 ###
-GET http://localhost:3000/api/v1/users/
+GET http://localhost:3000/api/v1/user/Duydickbu
+
+###
+POST http://localhost:3000/api/v1/user
+Content-Type: application/json
+
+{
+    "name": "Duydickbu",
+    "email": "duydickbu@gmail.com",
+    "password": "Duyiuemthui"
+}
+
+###
+POST http://localhost:3000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "name": "Duydickbu",
+    "password": "Duyiuemthui"
+}
+
+###
+PATCH http://localhost:3000/api/v1/user/Duy
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRHV5ZGlja2J1IiwicGFzc3dvcmQiOiJEdXlpdWVtdGh1aSIsImlhdCI6MTY4MDgyNTUxOX0.W7dpAjFNWiZlqz0WMevArRKDckTcn1K78nxjJGVfGoo
+Content-Type: application/json
+
+{
+    "name": "Duy",
+    "role": "customer",
+    "abc": "aaaa"
+}
+

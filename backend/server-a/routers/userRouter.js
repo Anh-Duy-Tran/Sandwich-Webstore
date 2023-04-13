@@ -7,20 +7,22 @@ const {
   updateUser,
   deleteUser,
   getnameUser,
+  acessToken,
+  authToken,
 } = require('../controllers/userController');
 
 const userRouter = express.Router();
 
-userRouter.route('/').get(getnameUser, getAllUsers).post(createUser);
+userRouter.route('/').get(getAllUsers).post(createUser);
 
-userRouter.route('/login');
+userRouter.route('/login').post(acessToken);
 
 userRouter.route('/logout');
 
 userRouter
-  .route('/:username')
+  .route('/:name')
   .get(getnameUser, getUser)
-  .put(updateUser)
-  .delete(deleteUser);
+  .patch(getnameUser, authToken, updateUser)
+  .delete(getnameUser, authToken, deleteUser);
 
 module.exports = userRouter;
