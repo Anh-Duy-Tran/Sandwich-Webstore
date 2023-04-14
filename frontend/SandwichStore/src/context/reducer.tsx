@@ -15,10 +15,20 @@ export interface Sandwich {
   breadType: string;
 }
 
+export interface User {
+  name : string;
+  role : "customer" | "admin";
+}
+
 export type Action = 
   | { type: "set-sandwiches", payload: Sandwich[] }
   | { type: "open-login" }
   | { type: "close-login" }
+  | { type : "login-failed", payload : string }
+  | { type : "set-snackbar-message", payload : string }
+  | { type : "clear-login-message" }
+  | { type : "close-snackbar" }
+  | { type : "set-user", payload : User | null }
 
 export const reducer = (
   state: StoreStateType,
@@ -47,6 +57,42 @@ export const reducer = (
       }
     }
 
+    case "clear-login-message" : {
+      return {
+        ...state,
+        loginMessage: null
+      }
+    }
+
+    case "login-failed" : {
+      return {
+        ...state,
+        loginMessage : action.payload
+      }
+    }
+
+    case "set-snackbar-message" : {
+      return {
+        ...state,
+        snackOpen: true,
+        snackMessage: action.payload
+      }
+    }
+
+    case "close-snackbar" : {
+      return {
+        ...state,
+        snackOpen: false
+      }
+    }
+
+    case "set-user" : {
+      return {
+        ...state,
+        user : action.payload
+      }
+    }
+
     default:
       return {
         ...state
@@ -57,11 +103,20 @@ export const reducer = (
 export interface StoreStateType {
   openLogin: boolean;
   sandwiches : Array<Sandwich>;
-
+  loginMessage : string | null;
+  username : string | null;
+  snackOpen : boolean;
+  snackMessage : string;
+  user : User | null;
 }
 
 export const initialState: StoreStateType = {
   openLogin: false,
-  sandwiches: []
+  sandwiches: [],
+  loginMessage : null,
+  username: null,
+  snackOpen: false,
+  snackMessage : "",
+  user: null
 }
 

@@ -7,7 +7,7 @@ const {
   updateUser,
   deleteUser,
   getnameUser,
-  acessToken,
+  login,
   authToken,
 } = require('../controllers/userController');
 
@@ -15,9 +15,7 @@ const userRouter = express.Router();
 
 userRouter.route('/').get(getAllUsers).post(createUser);
 
-userRouter.route('/login').post(acessToken);
-
-userRouter.route('/logout');
+userRouter.route('/login').post(login).get(authToken, (req, res) => res.status(200).end());
 
 userRouter
   .route('/:name')

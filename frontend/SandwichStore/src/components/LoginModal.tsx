@@ -14,6 +14,10 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { StoreContext } from '../context/StoreProvider';
+import service from '../services/login';
+import { AxiosError } from 'axios';
+import { decodeToken } from '../utils/login';
+import { Cookies } from 'typescript-cookie';
 
 const theme = createTheme();
 
@@ -28,9 +32,14 @@ const LoginButtonStyle = {
   }
 }
 
-const SignIn = ({}) => {
+interface SignInProps {
+  handleSubmit: React.FormEventHandler;
+  message: string | null;
+}
 
-  const handleSubmit = () => {};
+const SignIn: React.FC<SignInProps> = ({handleSubmit, message}) => {
+
+  
   const handleSignup = () => {};
 
   return (
@@ -69,10 +78,13 @@ const SignIn = ({}) => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {
+              message
+              ? <Typography>
+                  {message}
+                </Typography>
+              : null
+            }
 
             <Button
               type="submit"
@@ -116,6 +128,35 @@ const LoginModal = () => {
 
   const { state, dispatch } = React.useContext(StoreContext);
 
+  const handleSubmit = (e : React.SyntheticEvent) => {  
+    e.preventDefault();
+
+    dispatch({ type : "clear-login-message" });
+
+    const target = e.target as typeof e.target & {
+      username: { value: string };
+      password: { value: string };
+    };
+    const name = target.username.value;
+    const password = target.password.value;
+
+    service
+      .login({name, password})
+      .then(({accessToken}) => {
+        Cookies.set('accessToken', accessToken);
+        
+        const user = decodeToken(accessToken);
+        
+        dispatch({ type : "set-user", payload : user});
+        dispatch({ type : "close-login" });
+        dispatch({ type : "set-snackbar-message", payload : `Welcome back, ${user.name}!`})
+      })
+      .catch((err : AxiosError) => {
+        dispatch({type : "login-failed", payload : "Username or password is incorrect!"})
+      })
+    
+  };
+
   return (
     <div>
       <Modal
@@ -124,7 +165,7 @@ const LoginModal = () => {
       >
         <Fade in={state.openLogin}>
           <Box sx={style}>
-            <SignIn/>
+            <SignIn handleSubmit={handleSubmit} message={state.loginMessage}/>
           </Box>
         </Fade>
       </Modal>

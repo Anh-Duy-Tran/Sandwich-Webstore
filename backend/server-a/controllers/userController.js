@@ -1,7 +1,6 @@
 require('dotenv').config();
 const User = require('../models/user.js');
 const jwt = require('jsonwebtoken');
-const Roles = ['customer', 'admin'];
 
 const getAllUsers = async (req, res) => {
   res.json(await User.find({}));
@@ -70,18 +69,35 @@ const getnameUser = async (req, res, next) => {
   next();
 };
 
-const acessToken = async (req, res) => {
-  const user = { name: req.body.name, password: req.body.password };
+const login = async (req, res) => {
+  try {
+    const username = req.body.name;
+    const password = req.body.password;
 
-  const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET_KEY);
-  res.json({ accessToken: accessToken });
+    const user = await User.findOne({ name: username });
+
+    if (!user || user === undefined || !(await user.checkPassword(password))) {
+      return res
+        .status(401)
+        .json({ message: 'The username or password is incorrect.' });
+    }
+
+    const tokenUser = { name: user.name, role: user.role };
+  
+    const accessToken = jwt.sign(tokenUser, process.env.ACCESS_TOKEN_SECRET_KEY);
+    res.status(200).json({ accessToken: accessToken });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
 };
 
 const authToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) {
-    return res.status(401).json({ message: 'Authorization required' });
+    return res.status(401).json({ message: 'Authorization token required' });
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY, (err, user) => {
@@ -102,6 +118,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getnameUser,
-  acessToken,
+  login,
   authToken,
 };

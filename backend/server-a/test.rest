@@ -3,7 +3,7 @@ GET http://localhost:3000/api/v1/sandwich
 
 // get the sandwich based on id
 ###
-GET http://localhost:3000/api/v1/sandwich/642cb366a36f7d2514e90556
+GET http://localhost:3000/api/v1/sandwich/642d5a91414b1163f0c965b1
 
 
 ----------------------------------------------------------------
@@ -20,9 +20,9 @@ POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 {
-    "name": "Duydickbu",
-    "email": "duydickbu@gmail.com",
-    "password": "Duyiuemthui"
+    "name": "admin",
+    "email": "admin@gmail.com",
+    "password": "Admin123456"
 }
 
 ###
