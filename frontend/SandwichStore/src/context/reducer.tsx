@@ -6,7 +6,7 @@ interface Topping {
 }
 
 export interface Sandwich {
-  id_: string;
+  _id: string;
   name: string;
   price: number;
   image: string;

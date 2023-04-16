@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 interface SandwichCardProps {
   item: Sandwich;
@@ -16,11 +17,13 @@ export const SandwichCard: React.FC<SandwichCardProps> = ({ item }) => {
   
   return (
     <Card sx={{ width: "100%", maxWidth: 350, flexGrow: 1 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
+      <Link to={`/sandwich/${item._id}`}>
+        <CardMedia
+          sx={{ height: 140 }}
+          image={item.image}
+          title="green iguana"
+        />
+      </Link>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {item.name}

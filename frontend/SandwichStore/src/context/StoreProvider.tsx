@@ -1,10 +1,9 @@
 import { createContext, useEffect, useReducer } from "react";
 import { reducer, initialState, StoreStateType, Action } from "./reducer";
-import sandwiches from '../static/sandwiches.json';
 import { Cookies } from "typescript-cookie";
 import service from "../services/login";
-import jwtDecode from "jwt-decode";
 import { decodeToken } from "../utils/login";
+import { fetchSandwich } from "../services/sandwich";
 
 interface StoreContextValue {
   state: StoreStateType;
@@ -34,9 +33,14 @@ export const StoreProvider : React.FC<Props> = ({children}: { children?: React.R
     return Cookies.remove('accessToken');
   }
 
+  const fetchSandwiches = async () => {
+    const sandwiches = await fetchSandwich();
+    dispatch({ type: "set-sandwiches", payload : sandwiches });
+  }
+
   useEffect(() => {
     validateCurrentToken();
-    dispatch({ type: "set-sandwiches", payload : sandwiches });
+    fetchSandwiches();
   }, [])
 
   return (

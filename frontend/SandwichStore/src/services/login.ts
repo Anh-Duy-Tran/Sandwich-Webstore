@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosResponse } from "axios";
 
 const baseURL = "http://localhost:3000/api/v1/user/";
 
