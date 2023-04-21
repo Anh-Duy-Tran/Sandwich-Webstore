@@ -17,7 +17,7 @@ export const StoreMenu: React.FC = ({}) => {
         <Container sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: "center"}}>
           {
             state.sandwiches.map(
-              sandwich => <SandwichCard item={sandwich}/>
+              sandwich => <SandwichCard key={sandwich._id} item={sandwich}/>
             )
           }
         </Container>

@@ -4,6 +4,7 @@ import { Cookies } from "typescript-cookie";
 import service from "../services/login";
 import { decodeToken } from "../utils/login";
 import { fetchSandwich } from "../services/sandwich";
+import { getAllCart } from "../utils/cart";
 
 interface StoreContextValue {
   state: StoreStateType;
@@ -41,6 +42,7 @@ export const StoreProvider : React.FC<Props> = ({children}: { children?: React.R
   useEffect(() => {
     validateCurrentToken();
     fetchSandwiches();
+    dispatch({ type : "set-cart", payload: getAllCart()});
   }, [])
 
   return (

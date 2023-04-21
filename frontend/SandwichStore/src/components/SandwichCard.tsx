@@ -25,9 +25,11 @@ export const SandwichCard: React.FC<SandwichCardProps> = ({ item }) => {
         />
       </Link>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {item.name}
-        </Typography>
+        <Link to={`/sandwich/${item._id}`}>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.name}
+          </Typography>
+        </Link>
         <Typography variant="body2" color="text.secondary">
           {item.description}
         </Typography>

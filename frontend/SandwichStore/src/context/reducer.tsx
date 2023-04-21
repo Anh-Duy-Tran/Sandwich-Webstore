@@ -1,8 +1,16 @@
+import { updateCart } from "../utils/cart";
+
 type OrderStatus = "ordered" | "received" | "inQueue" | "ready" | "failed";
 
 interface Topping {
-  id: string;
-  [extraProps: string]: any; // Define an indexer for extra properties
+  id: number;
+  name: string;
+}
+
+interface ToppingUser {
+  id: number;
+  name: string;
+  number: number;
 }
 
 export interface Sandwich {
@@ -15,13 +23,42 @@ export interface Sandwich {
   breadType: string;
 }
 
+export interface SandwichUser {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  toppings: Array<ToppingUser>;
+  breadType: string;
+}
+
 export interface User {
   name : string;
   role : "customer" | "admin";
 }
 
+const mapToppingsToToppingsUser = (toppings: Topping[]): ToppingUser[] => {
+  return toppings.map((topping : Topping) : ToppingUser => ({ id: topping.id, name: topping.name, number : 0 }));
+}
+
+const convertSandwichToSandwichUser = (sandwich: Sandwich): SandwichUser => {
+  const { _id, name, price, image, description, toppings, breadType } = sandwich;
+  return { _id, name, price, image, description, toppings: mapToppingsToToppingsUser(toppings), breadType };
+}
+
+
+const modifyToppingUser = (sandwich : SandwichUser, id : number, number : number): SandwichUser => {
+  const newTopping = [...sandwich.toppings];
+  newTopping[id].number += number;
+  newTopping[id].number = newTopping[id].number < 0 ? 0 : newTopping[id].number;
+  return { ...sandwich, toppings : newTopping};
+}
+
+
 export type Action = 
   | { type: "set-sandwiches", payload: Sandwich[] }
+  | { type: "set-current-sandwich", payload: Sandwich | undefined }
   | { type: "open-login" }
   | { type: "close-login" }
   | { type : "login-failed", payload : string }
@@ -29,6 +66,11 @@ export type Action =
   | { type : "clear-login-message" }
   | { type : "close-snackbar" }
   | { type : "set-user", payload : User | null }
+  | { type : "set-current-topping", id : number, number : number}
+  | { type : "set-cart", payload : SandwichUser[]}
+  | { type : "add-to-cart" }
+  | { type : "togle-cart" }
+  | { type : "remove-item-cart", id : number }
 
 export const reducer = (
   state: StoreStateType,
@@ -93,6 +135,56 @@ export const reducer = (
       }
     }
 
+    case "set-current-sandwich" : {
+      return {
+        ...state,
+        currentSandwich : action.payload ? convertSandwichToSandwichUser(action.payload) : undefined
+      }
+    }
+
+    case "set-current-topping" : {
+      return {
+        ...state,
+        currentSandwich : state.currentSandwich ? modifyToppingUser(state.currentSandwich, action.id, action.number) : undefined
+      }
+    }
+
+    case "set-cart" : {
+      return {
+        ...state,
+        cart : action.payload
+      }
+    }
+
+    case "add-to-cart" : {
+      const newCart = [...state.cart];
+      newCart.push(state.currentSandwich!);
+      updateCart(newCart);
+
+      return {
+        ...state,
+        cart : newCart
+      }
+    }
+
+    case "togle-cart" : {
+      return {
+        ...state,
+        openCart : !state.openCart
+      }
+    }
+
+    case "remove-item-cart" : {
+      const newCart = [...state.cart];
+      newCart.splice(action.id, 1);
+      updateCart(newCart);
+
+      return {
+        ...state,
+        cart : newCart
+      }
+    }
+
     default:
       return {
         ...state
@@ -102,12 +194,16 @@ export const reducer = (
 
 export interface StoreStateType {
   openLogin: boolean;
-  sandwiches : Array<Sandwich>;
-  loginMessage : string | null;
-  username : string | null;
+  openCart : boolean;
   snackOpen : boolean;
+
+  loginMessage : string | null;
+  sandwiches : Array<Sandwich>;
+  username : string | null;
   snackMessage : string;
   user : User | null;
+  currentSandwich : SandwichUser | undefined;
+  cart : SandwichUser[];
 }
 
 export const initialState: StoreStateType = {
@@ -117,6 +213,9 @@ export const initialState: StoreStateType = {
   username: null,
   snackOpen: false,
   snackMessage : "",
-  user: null
+  user: null,
+  currentSandwich: undefined,
+  cart : [],
+  openCart : false
 }
 

@@ -5,10 +5,10 @@
     "image": "https://i.ibb.co/8rLrM8Y/ham-salad-submarine-sandwich-1339-5908.jpg",
     "description": "A classic sandwich with turkey, bacon, lettuce, and tomato on toasted bread",
     "toppings": [
-      { "id": "Mayonnaise", "isVegetarian": true },
-      { "id": "Mustard", "isVegetarian": true },
-      { "id": "Cheese", "isVegetarian": false },
-      { "id": "Avocado", "isVegetarian": true }
+      { "id" : 1, "name": "Mayonnaise"},
+      { "id" : 2, "name": "Mustard"},
+      { "id" : 3, "name": "Cheese" },
+      { "id" : 4, "name": "Avocado"}
     ],
     "breadType": "Whole Wheat"
   },
@@ -19,9 +19,9 @@
     "image": "https://i.ibb.co/8X4dK8T/club-sandwich-panini-with-ham-cheese-tomato-herbs-2829-19928-Large.png",
     "description": "A classic sandwich with bacon, lettuce, and tomato on toasted bread",
     "toppings": [
-      { "id": "Mayonnaise", "isVegetarian": true },
-      { "id": "Mustard", "isVegetarian": true },
-      { "id": "Cheese", "isVegetarian": false }
+      { "id" : 1, "name": "Mayonnaise"},
+      { "id" : 2, "name": "Mustard"},
+      { "id" : 3, "name": "Cheese" }
     ],
     "breadType": "White"
   },
@@ -32,8 +32,8 @@
     "image": "https://i.ibb.co/Fw1nwfP/sandwich-served-with-french-fries-vegetables-140725-3173-Medium.png",
     "description": "A simple sandwich with melted cheese between two slices of bread",
     "toppings": [
-      { "id": "Butter", "isVegetarian": true },
-      { "id": "Tomato Soup", "isVegetarian": true }
+      { "id" : 1, "name": "Butter"},
+      { "id" : 2, "name": "Tomato Soup"}
     ],
     "breadType": "Sourdough"
   },
@@ -44,8 +44,8 @@
     "image": "https://i.ibb.co/qm71k0q/high-angle-apple-pie-slice-plate-23-2148695555.jpg",
     "description": "A sandwich with corned beef, sauerkraut, Swiss cheese, and Russian dressing on rye bread",
     "toppings": [
-      { "id": "Russian Dressing", "isVegetarian": true },
-      { "id": "Sauerkraut", "isVegetarian": true }
+      { "id" : 1, "name": "Russian Dressing"},
+      { "id" : 2, "name": "Sauerkraut"}
     ],
     "breadType": "Rye"
   },
@@ -53,12 +53,12 @@
   {
     "name": "Chicken Caesar Wrap",
     "price": 7.99,
-    "image": "https://i.ibb.co/Z8Dvr1M/side-view-chicken-roll-grilled-chicken-lettuce-cucumber-tomato-mayo-pita-141793-4849-Large.png",
+    "image": "https://i.ibb.co/Z8Dvr1M/snamee-view-chicken-roll-grilled-chicken-lettuce-cucumber-tomato-mayo-pita-141793-4849-Large.png",
     "description": "A wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing",
     "toppings": [
-      { "id": "Caesar Dressing", "isVegetarian": true },
-      { "id": "Parmesan Cheese", "isVegetarian": false },
-      { "id": "Tomato", "isVegetarian": true }
+      { "id" : 1, "name": "Caesar Dressing"},
+      { "id" : 2, "name": "Parmesan Cheese" },
+      { "id" : 3, "name": "Tomato"}
     ],
     "breadType": "Wrap"
   },
@@ -69,9 +69,9 @@
     "image": "https://i.ibb.co/YtKC95h/tuna-sandwich-wood-1339-7586-Large.png",
     "description": "A sandwich with tuna salad, lettuce, and tomato on toasted bread",
     "toppings": [
-      { "id": "Mayonnaise", "isVegetarian": true },
-      { "id": "Celery", "isVegetarian": true },
-      { "id": "Onion", "isVegetarian": true }
+      { "id" : 1, "name": "Mayonnaise"},
+      { "id" : 2, "name": "Celery"},
+      { "id" : 3, "name": "Onion"}
     ],
     "breadType": "Multigrain"
   }

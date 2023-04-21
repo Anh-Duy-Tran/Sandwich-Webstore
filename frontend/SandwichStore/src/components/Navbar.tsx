@@ -7,6 +7,7 @@ import Logo from "../icons/logo.svg";
 import { Button, Menu, MenuItem, SxProps, Theme } from '@mui/material';
 import { StoreContext } from '../context/StoreProvider';
 import { Cookies } from 'typescript-cookie';
+import { Link } from 'react-router-dom';
 
 interface Props {
   window?: () => Window;
@@ -69,7 +70,9 @@ export default function Navbar() {
       <ElevationScroll>
         <AppBar sx={{ backgroundColor: trigger ? "rgba(255,255,255,0.7)" : "transparent"}}>
           <Toolbar>
-            <img src={Logo} style={{ width: "200px" }} ></img>
+            <Link to={"/"}>
+              <img src={Logo} style={{ width: "200px" }} ></img>
+            </Link>
             {
               state.user
               ? <>

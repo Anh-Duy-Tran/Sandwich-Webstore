@@ -5,25 +5,24 @@ import { ImageSlider } from '../../components/ImageSlider';
 import LoginModal from '../../components/LoginModal';
 import Navbar from '../../components/Navbar';
 import { StoreMenu } from '../../components/StoreMenu';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 import { Product } from '../../components/Product';
+import { CartFab } from '../../components/CartFab';
+import { CartDrawer } from '../../components/CartDrawer';
 
 
 export const ProductPage: React.FC = ({}) => {
   let product = useParams();
 
+
+
   return (
     <Box sx={{ position: "relative" }}>
       <Navbar />
+      <CartDrawer/>
       <LoginModal />
       <Product id={product.id ? product.id : ""}/>
-      <Fab
-        variant="extended"
-        sx={{ mr: 3, mb: 2, position: "fixed", bottom: "0px", right: "0px" }}
-      >
-        <ShoppingCartIcon/>
-        Cart
-      </Fab>
+      <CartFab/>
     </Box>
   );
 }
