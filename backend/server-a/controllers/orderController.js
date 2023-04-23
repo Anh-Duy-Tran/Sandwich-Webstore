@@ -4,6 +4,12 @@ const Sandwich = require('../models/sandwich');
 const Order = require('../models/order.js');
 const jwt = require('jsonwebtoken');
 
+/**
+ * Get all the orders and send back as JSON - need admin's authorization
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @returns when error is returned
+ */
 const getAllOrders = async (req, res) => {
   if (req.user.role !== 'admin') {
     return res
@@ -13,6 +19,11 @@ const getAllOrders = async (req, res) => {
   res.json(await Order.find({}));
 };
 
+/**
+ * Get all orders from given user and send back as JSON
+ * @param {*} req the request object
+ * @param {*} res the response object
+ */
 const getOrderUSer = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.user.email });
@@ -24,6 +35,12 @@ const getOrderUSer = async (req, res) => {
   }
 };
 
+/**
+ * Create a new order and send back as JSON
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @returns new Order
+ */
 const createOrder = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.user.email });
@@ -35,6 +52,12 @@ const createOrder = async (req, res) => {
   }
 };
 
+/**
+ * Delete an order based on the OrderID
+ * @param {*} req - the request object
+ * @param {*} res  - the response object
+ * @returns when error is returned
+ */
 const deleteOrder = async (req, res) => {
   try {
     const id = req.params.id;

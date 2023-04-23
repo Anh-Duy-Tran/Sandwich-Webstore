@@ -2,14 +2,36 @@ require('dotenv').config();
 const User = require('../models/user.js');
 const jwt = require('jsonwebtoken');
 
+/**
+ * Get all the users as JSON - need admin's authorization
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @returns
+ */
 const getAllUsers = async (req, res) => {
+  if (req.user.role !== 'admin') {
+    return res
+      .status(403)
+      .json({ message: 'You dont have permission to access' });
+  }
   res.json(await User.find({}));
 };
 
+/**
+ * Get a user from name and send a user as JSON
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ */
 const getUser = async (req, res) => {
   res.json(req.user);
 };
 
+/**
+ * Create a new user and send created user as JSON
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @returns when created successfully
+ */
 const createUser = async (req, res) => {
   try {
     const user = new User({ ...req.body });
@@ -24,6 +46,11 @@ const createUser = async (req, res) => {
   }
 };
 
+/**
+ * Update a user and send updated user as JSON
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ */
 const updateUser = async (req, res) => {
   try {
     const includepart = ['name', 'email', 'password', 'role'];
@@ -36,12 +63,17 @@ const updateUser = async (req, res) => {
       }
     });
     const updatedUser = await user.save();
-    res.json(updatedUser);
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
 };
 
+/**
+ * Delete a user and send deleted user as JSON
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ */
 const deleteUser = async (req, res) => {
   try {
     await User.deleteOne({ email: req.user.email });
@@ -51,10 +83,17 @@ const deleteUser = async (req, res) => {
   }
 };
 
+/**
+ * Get a user by name
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @param {*} next - the next item in an iterator
+ * @returns
+ */
 const getnameUser = async (req, res, next) => {
   let user;
   try {
-    user = await User.findOne({ name: req.params.name });
+    user = await User.findOne({ name: req.params.username });
 
     if (!user || user === undefined) {
       return res.status(404).json({ message: 'NotFound' });
@@ -66,6 +105,12 @@ const getnameUser = async (req, res, next) => {
   next();
 };
 
+/**
+ * login - sign JSONToken and send back to the server
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @returns when username/password is incorrect
+ */
 const login = async (req, res) => {
   try {
     const username = req.body.name;
@@ -91,6 +136,13 @@ const login = async (req, res) => {
   }
 };
 
+/**
+ * Verify the token and return the next router
+ * @param {*} req - the request object
+ * @param {*} res - the response object
+ * @param {*} next - the next item in an iterator
+ * @returns when error is raised
+ */
 const authToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
