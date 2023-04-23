@@ -1,22 +1,60 @@
-// get all sandwich types
-GET http://localhost:3000/api/v1/sandwich
+// get all sandwiches
+GET http://localhost:3000/sandwich
+
+// create a new sandwich - need authorization
+###
+POST  http://localhost:3000/sandwich
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI4NTUyNH0.JQz5b9TGqYY4XNj2yr2PQSFPAtpoVLmCN_ZHAk1u2vg
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "price": 8.99,
+    "image": "https://i.ibb.co/8rLrM8Y/ham-salad-submarine-sandwich-1339-5908.jpg",
+    "description": "A classic sandwich with turkey, bacon, lettuce, and tomato on toasted bread",
+    "toppings": [
+      { "id" : 1, "name": "Mayonnaise"},
+      { "id" : 2, "name": "Mustard"},
+      { "id" : 3, "name": "Cheese" },
+      { "id" : 4, "name": "Avocado"}
+    ],
+    "breadType": "Whole Duy"
+}
 
 // get the sandwich based on id
 ###
-GET http://localhost:3000/api/v1/sandwich/642d5a91414b1163f0c965b1
+GET http://localhost:3000/sandwich/642cb366a36f7d2514e90556
+
+// update the sandwich based on id - need authentication
+###
+PATCH http://localhost:3000/sandwich/642cb366a36f7d2514e9055e3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI4NTUyNH0.JQz5b9TGqYY4XNj2yr2PQSFPAtpoVLmCN_ZHAk1u2vg
+Content-Type: application/json
+
+{
+    "name": "Test again",
+    "price": 8.2
+}
+
+// delete the sandwich based on id - need authorization
+###
+DELETE http://localhost:3000/sandwich/642cb366a36f7d2514e9055e3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNDc1MH0.j0gkBepSErRDALu58uQSNELmWz878tKgY0KehW9E17k
 
 
 ----------------------------------------------------------------
-// get all users
+// get all users - need authorization
 ###
-GET http://localhost:3000/api/v1/user
+GET http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI4NTUyNH0.JQz5b9TGqYY4XNj2yr2PQSFPAtpoVLmCN_ZHAk1u2vg
 
-//get user based on name
+// get user based on name
 ###
-GET http://localhost:3000/api/v1/user/Duyhihi
+GET http://localhost:3000/user/Duyhihi
 
+// create a new user
 ###
-POST http://localhost:3000/api/v1/user
+POST http://localhost:3000/user
 Content-Type: application/json
 
 {
@@ -25,17 +63,9 @@ Content-Type: application/json
     "password": "Admin123456"
 }
 
+// login
 ###
-POST http://localhost:3000/api/v1/user
-Content-Type: application/json
-
-{
-    "name": "Duyhihi",
-    "email": "duyhihi@gmail.com",
-    "password": "duyhihihehe"
-}
-###
-POST http://localhost:3000/api/v1/user/login
+POST http://localhost:3000/user/login
 Content-Type: application/json
 
 {
@@ -43,9 +73,10 @@ Content-Type: application/json
     "password": "Admin123456"
 }
 
+// update a user - need authorization
 ###
-PATCH http://localhost:3000/api/v1/user/admin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNDc1MH0.j0gkBepSErRDALu58uQSNELmWz878tKgY0KehW9E17k
+PATCH http://localhost:3000/user/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI4NTUyNH0.JQz5b9TGqYY4XNj2yr2PQSFPAtpoVLmCN_ZHAk1u2vg
 Content-Type: application/json
 
 {
@@ -54,20 +85,20 @@ Content-Type: application/json
     "abc": "aaaa"
 }
 
-// get all orders
+// get all orders - need authorization
 ###
-GET http://localhost:3000/api/v1/order/all
+GET http://localhost:3000/order/all
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNTIxOX0.n1NkD96BnygZSNlHILFyOWZX72yKWeIOggPOMVvP6hI
 
-// get all orders from given user_id
+// get all orders from given user_id - need authentication
 ###
-GET http://localhost:3000/api/v1/order
+GET http://localhost:3000/order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNTIxOX0.n1NkD96BnygZSNlHILFyOWZX72yKWeIOggPOMVvP6hI
 
 
-// create an order
+// create an order - need authentication
 ###
-POST http://localhost:3000/api/v1/order
+POST http://localhost:3000/order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U
 Content-Type: application/json
 
@@ -89,7 +120,7 @@ Content-Type: application/json
     ]
 }
 
-
+// delete an order from given Order_id - need authorization
 ###
-DELETE http://localhost:3000/api/v1/order/64446b9fe39054271a8a6fec
+DELETE http://localhost:3000/order/64446b9fe39054271a8a6fec
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U
