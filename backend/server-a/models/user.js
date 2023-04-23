@@ -1,6 +1,6 @@
-const bcrypt = require("bcryptjs");
-const mongoose = require("mongoose");
-const { stringify } = require("querystring");
+const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
+const { stringify } = require('querystring');
 const Schema = mongoose.Schema;
 
 const SALT_ROUNDS = 10;
@@ -17,8 +17,8 @@ const SCHEMA_DEFAULTS = {
     minLength: 10,
   },
   role: {
-    values: ["admin", "customer"],
-    defaultValue: "customer",
+    values: ['admin', 'customer'],
+    defaultValue: 'customer',
   },
 };
 
@@ -27,6 +27,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true,
     minLength: SCHEMA_DEFAULTS.name.minLength,
     maxLength: SCHEMA_DEFAULTS.name.maxLength,
   },
@@ -68,7 +69,7 @@ const userSchema = new Schema({
 userSchema.methods.checkPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
-userSchema.set("toJSON", { virtuals: false, versionKey: false });
+userSchema.set('toJSON', { virtuals: false, versionKey: false });
 
-const User = new mongoose.model("User", userSchema);
+const User = new mongoose.model('User', userSchema);
 module.exports = User;

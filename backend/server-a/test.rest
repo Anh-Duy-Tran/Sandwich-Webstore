@@ -11,9 +11,9 @@ GET http://localhost:3000/api/v1/sandwich/642d5a91414b1163f0c965b1
 ###
 GET http://localhost:3000/api/v1/user
 
-//get user based on id
+//get user based on name
 ###
-GET http://localhost:3000/api/v1/user/Duydickbu
+GET http://localhost:3000/api/v1/user/Duyhihi
 
 ###
 POST http://localhost:3000/api/v1/user
@@ -26,22 +26,70 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:3000/api/v1/user
+Content-Type: application/json
+
+{
+    "name": "Duyhihi",
+    "email": "duyhihi@gmail.com",
+    "password": "duyhihihehe"
+}
+###
 POST http://localhost:3000/api/v1/user/login
 Content-Type: application/json
 
 {
-    "name": "Duydickbu",
-    "password": "Duyiuemthui"
+    "name": "admin",
+    "password": "Admin123456"
 }
 
 ###
-PATCH http://localhost:3000/api/v1/user/Duy
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRHV5ZGlja2J1IiwicGFzc3dvcmQiOiJEdXlpdWVtdGh1aSIsImlhdCI6MTY4MDgyNTUxOX0.W7dpAjFNWiZlqz0WMevArRKDckTcn1K78nxjJGVfGoo
+PATCH http://localhost:3000/api/v1/user/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNDc1MH0.j0gkBepSErRDALu58uQSNELmWz878tKgY0KehW9E17k
 Content-Type: application/json
 
 {
-    "name": "Duy",
-    "role": "customer",
+    "name": "admin",
+    "role": "admin",
     "abc": "aaaa"
 }
 
+// get all orders
+###
+GET http://localhost:3000/api/v1/order/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNTIxOX0.n1NkD96BnygZSNlHILFyOWZX72yKWeIOggPOMVvP6hI
+
+// get all orders from given user_id
+###
+GET http://localhost:3000/api/v1/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNTIxOX0.n1NkD96BnygZSNlHILFyOWZX72yKWeIOggPOMVvP6hI
+
+
+// create an order
+###
+POST http://localhost:3000/api/v1/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U
+Content-Type: application/json
+
+{
+    "customerId": "642f563dde8cef89ac066f0e",
+    "items": [
+        {
+            "_id": "642cb366a36f7d2514e90556",
+            "name": "Chicken Caesar Wrap",
+            "price": 7.99,
+            "image": "https://example.com/chicken-caesar-wrap.jpg",
+            "description": "A wrap with grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing",
+            "toppings": [
+                { "id" : 1, "name": "Caesar Dressing", "number" : 1},
+                { "id" : 2, "name": "Parmesan Cheese", "number" : 2 },
+                { "id" : 3, "name": "Tomato", "number" : 0}
+            ]
+        }
+    ]
+}
+
+
+###
+DELETE http://localhost:3000/api/v1/order/64446b9fe39054271a8a6fec
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U

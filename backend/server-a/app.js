@@ -12,6 +12,6 @@ app.use(express.json());
 
 app.use('/api/v1/sandwich', sandwichRouter);
 app.use('/api/v1/user', userRouter);
-app.use('api/v1/order', orderRouter);
+app.use('/api/v1/order', orderRouter);
 
 module.exports = app;

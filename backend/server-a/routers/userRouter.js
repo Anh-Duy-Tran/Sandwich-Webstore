@@ -15,7 +15,10 @@ const userRouter = express.Router();
 
 userRouter.route('/').get(getAllUsers).post(createUser);
 
-userRouter.route('/login').post(login).get(authToken, (req, res) => res.status(200).end());
+userRouter
+  .route('/login')
+  .post(login)
+  .get(authToken, (req, res) => res.status(200).end());
 
 userRouter
   .route('/:name')

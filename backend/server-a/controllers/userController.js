@@ -17,7 +17,6 @@ const createUser = async (req, res) => {
     if ((await User.findOne({ email: user.email })) !== null) {
       return res.status(409).json({ message: 'User already exists' });
     }
-
     const newUser = await User.create(user);
     return res.status(201).json(newUser);
   } catch (err) {
@@ -29,17 +28,14 @@ const updateUser = async (req, res) => {
   try {
     const includepart = ['name', 'email', 'password', 'role'];
 
-    const user = await User.findOne({ name: req.params.name });
+    const user = await User.findOne({ email: req.user.email });
 
-    const newUser = Object.keys(req.body).forEach((key) => {
+    Object.keys(req.body).forEach((key) => {
       if (includepart.includes(key)) {
         user[key] = req.body[key];
       }
     });
-
     const updatedUser = await user.save();
-
-    console.log(updatedUser);
     res.json(updatedUser);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -48,7 +44,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    await User.remove(req.user);
+    await User.deleteOne({ email: req.user.email });
+    res.status(204).end();
   } catch (err) {
     res.status(500).json({ message: 'Fail to delete user' });
   }
@@ -82,15 +79,16 @@ const login = async (req, res) => {
         .json({ message: 'The username or password is incorrect.' });
     }
 
-    const tokenUser = { name: user.name, role: user.role };
-  
-    const accessToken = jwt.sign(tokenUser, process.env.ACCESS_TOKEN_SECRET_KEY);
-    res.status(200).json({ accessToken: accessToken });
+    const tokenUser = { name: user.name, email: user.email, role: user.role };
 
+    const accessToken = jwt.sign(
+      tokenUser,
+      process.env.ACCESS_TOKEN_SECRET_KEY
+    );
+    res.status(200).json({ accessToken: accessToken });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-
 };
 
 const authToken = async (req, res, next) => {

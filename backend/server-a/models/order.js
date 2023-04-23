@@ -9,41 +9,40 @@ const SCHEMA_DEFAULTS = {
 };
 
 const orderItemSchema = new Schema({
-  sandwich: {
-    _id: {
-      type: Schema.Types.ObjectId,
-      ref: 'sandwich',
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      minLength: SCHEMA_DEFAULTS.name.minLength,
-      maxLength: SCHEMA_DEFAULTS.name.maxLength,
-    },
+  _id: {
+    type: Schema.Types.ObjectId,
+    ref: 'sandwich',
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minLength: SCHEMA_DEFAULTS.name.minLength,
+    maxLength: SCHEMA_DEFAULTS.name.maxLength,
+  },
 
-    price: {
-      type: Number,
-      required: true,
-      validate: {
-        validator: function (n) {
-          return n > 0;
-        },
-        message: 'Price cannot be 0',
+  price: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: function (n) {
+        return n > 0;
       },
+      message: 'Price cannot be 0',
     },
+  },
 
-    description: {
-      type: String,
-      required: [true, 'An order must have a description'],
-    },
-    toppings: {
-      type: [Object],
-    },
-    status: {
-      type: String,
-    },
+  description: {
+    type: String,
+    required: [true, 'An order must have a description'],
+  },
+  toppings: {
+    type: [Object],
+  },
+  status: {
+    type: String,
+    default: 'received',
   },
 });
 
