@@ -11,4 +11,26 @@
 # First line is provided for your convenience.
 # This line fetches the Node Docker image with tag "10"
 # from Docker Hub.
+
+# Use the official Node.js 10 image as base
 FROM node:10
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files to the container
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Copy the rest of the application source code to the container
+COPY . .
+
+ENV PORT = 8080
+
+# Expose port 8080 for incoming traffic
+EXPOSE 8080
+
+# Start the server by default when the container starts
+CMD [ "npm", "start" ]

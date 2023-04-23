@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const connectDB = () => {
-  //   console.log(process.env.DATABASE_URL);
   mongoose
-    .connect('mongodb://localhost:27017/WebShopDb')
+    .connect(`mongodb+srv://duyduymongo1:sandwich123@cluster0.rg9xia8.mongodb.net/WebShopDb`)
     .then(() => {
       console.log('DB connected');
     })
