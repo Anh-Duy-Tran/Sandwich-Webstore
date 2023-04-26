@@ -33,8 +33,16 @@ export interface SandwichUser {
   breadType: string;
 }
 
+export interface Order {
+  _id: string;
+  customerId: string;
+  items: SandwichUser[];
+  status: OrderStatus;
+}
+
 export interface User {
   name : string;
+  email : string;
   role : "customer" | "admin";
 }
 
@@ -71,6 +79,7 @@ export type Action =
   | { type : "add-to-cart" }
   | { type : "togle-cart" }
   | { type : "remove-item-cart", id : number }
+  | { type : "set-orders", payload : Order[] }
 
 export const reducer = (
   state: StoreStateType,
@@ -150,6 +159,7 @@ export const reducer = (
     }
 
     case "set-cart" : {
+      updateCart(action.payload);
       return {
         ...state,
         cart : action.payload
@@ -185,6 +195,13 @@ export const reducer = (
       }
     }
 
+    case "set-orders" : {
+      return {
+        ...state,
+        orders : action.payload
+      }
+    }
+
     default:
       return {
         ...state
@@ -204,6 +221,7 @@ export interface StoreStateType {
   user : User | null;
   currentSandwich : SandwichUser | undefined;
   cart : SandwichUser[];
+  orders : Order[];
 }
 
 export const initialState: StoreStateType = {
@@ -216,6 +234,7 @@ export const initialState: StoreStateType = {
   user: null,
   currentSandwich: undefined,
   cart : [],
-  openCart : false
+  openCart : false,
+  orders : []
 }
 

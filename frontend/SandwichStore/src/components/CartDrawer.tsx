@@ -9,11 +9,27 @@ import {
 import React, { useContext } from "react";
 import { StoreContext } from "../context/StoreProvider";
 import CloseIcon from "@mui/icons-material/Close";
+import { makeOrder } from "../services/orders";
+import { Cookies } from "typescript-cookie";
 
 export const CartDrawer: React.FC = ({}) => {
   const { state, dispatch } = useContext(StoreContext);
 
   let totalPrice = 0;
+
+  const onPlaceOrder = () => {
+    if (state.user === null) 
+    {
+      dispatch({ type : "set-snackbar-message", payload : "You need to log in to make an order!"});
+      dispatch({ type: "togle-cart" });
+      return;
+    }
+    
+    makeOrder(state.cart, Cookies.get('accessToken')?.toString()!);
+    dispatch({ type : "set-cart", payload: []});
+    dispatch({ type : "set-snackbar-message", payload : "Order successful!"});
+    dispatch({ type: "togle-cart" });
+  }
 
   return (
     <Drawer
@@ -86,7 +102,7 @@ export const CartDrawer: React.FC = ({}) => {
         </Container>
 
         {state.cart.length !== 0 ? (
-          <Button sx={{ mt: 5 }}>Proceed To Checkout</Button>
+          <Button onClick={() => onPlaceOrder()} sx={{ mt: 5 }}>Place Order</Button>
         ) : null}
       </Box>
     </Drawer>

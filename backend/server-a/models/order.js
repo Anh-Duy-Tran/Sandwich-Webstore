@@ -40,10 +40,6 @@ const orderItemSchema = new Schema({
   toppings: {
     type: [Object],
   },
-  status: {
-    type: String,
-    default: 'received',
-  },
 });
 
 const orderSchema = new Schema({
@@ -51,6 +47,10 @@ const orderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+  },
+  status: {
+    type: String,
+    default: 'ordered',
   },
   // for items:
   items: {

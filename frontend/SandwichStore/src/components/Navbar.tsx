@@ -90,7 +90,7 @@ export default function Navbar() {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <MenuItem onClick={handleClose}><Link to={"/orders"}>My orders</Link></MenuItem>
                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                   </Menu>
                 </>

@@ -123,6 +123,11 @@ export const Product: React.FC<ProductProps> = ({ id }) => {
           Add to cart
         </Button>
       </Box>
+      <Snackbar
+          open={state.snackOpen}
+          onClose={() => dispatch({ type : "close-snackbar" })}
+          message= {state.snackMessage}
+        />
     </Container>
   ) : null;
 };

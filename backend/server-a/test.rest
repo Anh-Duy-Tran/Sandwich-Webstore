@@ -45,8 +45,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iL
 ----------------------------------------------------------------
 // get all users - need authorization
 ###
-GET http://localhost:3000/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI4NTUyNH0.JQz5b9TGqYY4XNj2yr2PQSFPAtpoVLmCN_ZHAk1u2vg
+GET http://localhost:3000/api/v1/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlciIsImVtYWlsIjoidXNlckBnbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE2ODIzMzQ4MjJ9.j3FvYn2dVqzCxS6A6XXSqTXGIX75ih5uf4dfClIT6AY
 
 // get user based on name
 ###
@@ -54,18 +54,18 @@ GET http://localhost:3000/user/Duyhihi
 
 // create a new user
 ###
-POST http://localhost:3000/user
+POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "email": "admin@gmail.com",
-    "password": "Admin123456"
+    "name": "user",
+    "email": "user@gmail.com",
+    "password": "User123456"
 }
 
 // login
 ###
-POST http://localhost:3000/user/login
+POST http://localhost:3000/api/v1/user/login
 Content-Type: application/json
 
 {
@@ -92,18 +92,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iL
 
 // get all orders from given user_id - need authentication
 ###
-GET http://localhost:3000/order
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY4MjIwNTIxOX0.n1NkD96BnygZSNlHILFyOWZX72yKWeIOggPOMVvP6hI
+GET http://localhost:3000/api/v1/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjMzNzQ5OX0.Yao2FUERLF6s8lN9cQXYQoVN5aNHgcjOpVTH0Fv0W1o
 
 
 // create an order - need authentication
 ###
-POST http://localhost:3000/order
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U
+POST http://localhost:3000/api/v1/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjI5MDA4OX0.morxnICxZQz7sEvFaeILsG_r5Ad1FBow5S6gZ4F30W4
 Content-Type: application/json
 
 {
-    "customerId": "642f563dde8cef89ac066f0e",
     "items": [
         {
             "_id": "642cb366a36f7d2514e90556",
@@ -122,5 +121,5 @@ Content-Type: application/json
 
 // delete an order from given Order_id - need authorization
 ###
-DELETE http://localhost:3000/order/64446b9fe39054271a8a6fec
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjIwNTIxOX0.cJMaXWu6-OVXGdNm94zxHYecGrV9pB9WY0zdYCvqh_U
+DELETE http://localhost:3000/api/v1/order/6446a5e863f77758aadc95c9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjM1MTUzNX0.SOUStD8TFAO8OqfsUqlHaH7ndnT3r1rDrrvItMIhoVE

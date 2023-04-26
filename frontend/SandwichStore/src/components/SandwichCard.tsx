@@ -8,6 +8,33 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
+const LinkStyle = {
+  color : "black",
+  backgroundColor : "white",
+  textDecoration: "none",
+  "&:link": {
+    textDecoration: "none"
+  },
+  "&:visited": {
+    textDecoration: "none"
+  },
+  "&:hover": {
+    textDecoration: "none"
+  },
+  "&:active": {
+    textDecoration: "none"
+  }
+}
+
+const LoginButtonStyle = {
+  color : "white",
+  backgroundColor : "black",
+  "&:hover": {
+    backgroundColor : "black",
+    textDecoration: "underline #FFFFFF"
+  }
+}
+
 interface SandwichCardProps {
   item: Sandwich;
 }
@@ -21,12 +48,12 @@ export const SandwichCard: React.FC<SandwichCardProps> = ({ item }) => {
         <CardMedia
           sx={{ height: 140 }}
           image={item.image}
-          title="green iguana"
+          title={item.name}
         />
       </Link>
       <CardContent>
-        <Link to={`/sandwich/${item._id}`}>
-          <Typography gutterBottom variant="h5" component="div">
+        <Link to={`/sandwich/${item._id}`} style={LinkStyle}>
+          <Typography sx={LinkStyle} gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
         </Link>
@@ -34,8 +61,8 @@ export const SandwichCard: React.FC<SandwichCardProps> = ({ item }) => {
           {item.description}
         </Typography>
       </CardContent>
-      <CardActions sx={{ justifyContent: "center"}}>
-        <Button size="small">Add To Cart</Button>
+      <CardActions sx={{ justifyContent: "center" }}>
+        <Button sx={ LoginButtonStyle } size="small">Add To Cart</Button>
       </CardActions>
     </Card>
   )

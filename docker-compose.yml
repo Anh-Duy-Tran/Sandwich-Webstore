@@ -21,7 +21,7 @@ services:
     # can be modified to be anything, but what is given should
     # work. Just uncomment them
     depends_on:
-      -  mongodb
+      # -  mongodb
       -  rapid-runner-rabbit
     # command: ["node", "."]
     command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
@@ -84,17 +84,17 @@ services:
   # But some groups could find a way to do this without
   # databases (but I could not :-) )
   # database-service would go here.
-  mongodb:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
-    volumes:
-      - mongo-data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - backend
+  # mongodb:
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: admin
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - backend
 
 # Here we create a named network, that all the backend components
 # must be added to for them to be able to communicate through
@@ -107,6 +107,6 @@ networks:
 # Documentation: https://docs.docker.com/storage/volumes/
 # Personally I like to look at the database's image's Dockerfile
 # in the Docker Hub to see what directory it uses to store data.
-volumes:
-  mongo-data:
-    driver: local
+# volumes:
+#   mongo-data:
+#     driver: local

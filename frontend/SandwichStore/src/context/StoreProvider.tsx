@@ -5,6 +5,8 @@ import service from "../services/login";
 import { decodeToken } from "../utils/login";
 import { fetchSandwich } from "../services/sandwich";
 import { getAllCart } from "../utils/cart";
+import { subscribeToOrders } from "../services/socket";
+import { fetchOrders } from "../services/orders";
 
 interface StoreContextValue {
   state: StoreStateType;
@@ -39,11 +41,33 @@ export const StoreProvider : React.FC<Props> = ({children}: { children?: React.R
     dispatch({ type: "set-sandwiches", payload : sandwiches });
   }
 
+  const fetchingOrders =async () => {
+    const orders = await fetchOrders(Cookies.get('accessToken')?.toString()!);
+    dispatch({ type : "set-orders", payload : orders})
+  }
+
   useEffect(() => {
     validateCurrentToken();
     fetchSandwiches();
     dispatch({ type : "set-cart", payload: getAllCart()});
   }, [])
+
+  useEffect(() => {
+    let cleanUp = () => {}
+    if (state.user !== null) 
+    {
+      console.log('loged in');
+      fetchingOrders();
+      const socket = subscribeToOrders(state.user.name, dispatch);
+      cleanUp = () => {
+        socket.off(`update-${state.user?.name}`);
+        socket.disconnect();
+      }
+    }
+
+    return cleanUp;
+  }, [state.user])
+
 
   return (
     <StoreContext.Provider value={{state, dispatch}}>

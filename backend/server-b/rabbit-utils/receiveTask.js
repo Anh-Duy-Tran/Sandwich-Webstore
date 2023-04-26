@@ -5,6 +5,7 @@
 "use strict";
 
 var amqp = require("amqplib");
+const sendTask = require('./sendTask.js')
 
 module.exports.getTask = function (rabbitHost, queueName) {
   amqp
@@ -30,10 +31,12 @@ module.exports.getTask = function (rabbitHost, queueName) {
         function doWork(msg) {
           var body = msg.content.toString();
           console.log(" [x] Received '%s'", body);
-          var secs = body.split(".").length - 1;
+          // var secs = body.split(".").length - 1;
           // console.log(" [x] Task takes %d seconds", secs);
           setTimeout(function () {
             console.log(new Date(), " [x] Done");
+            // sendTask.addTask("rapid-runner-rabbit", "completed-orders", 123);
+            sendTask.addTask("localhost", "completed-orders", body);
             ch.ack(msg);
           }, 10000);
         }
