@@ -48,9 +48,31 @@ const orderSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  customerName: {
+    type: String,
+    ref: 'User',
+    required: true,
+  },
   status: {
     type: String,
     default: 'ordered',
+  },
+  orderPrice: {
+    type: Number,
+    required: true,
+  },
+  orderTime: {
+    type: String,
+    required: true,
+  },
+  receiveOrderTime: {
+    type: String,
+  },
+  inQueueTime: {
+    type: String,
+  },
+  doneTime: {
+    type: String,
   },
   // for items:
   items: {

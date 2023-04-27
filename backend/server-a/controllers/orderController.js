@@ -1,9 +1,7 @@
 require('dotenv').config();
 const User = require('../models/user.js');
 const Order = require('../models/order.js');
-const sendTask = require('../rabbit-utils/sendTask.js')
-
-
+const sendTask = require('../rabbit-utils/sendTask.js');
 
 /**
  * Get all the orders and send back as JSON - need admin's authorization
@@ -45,9 +43,29 @@ const getOrderUSer = async (req, res) => {
 const createOrder = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.user.email });
-    const order = new Order({ ...req.body, customerId: user._id, status : "received" });
-    const newOrder = await Order.create(order);
-    sendTask.addTask("localhost", "received-orders", newOrder)
+    const order = {
+      ...req.body,
+    };
+    console.log(order.items);
+    let totalPrice = 0;
+    order.items.forEach((item) => {
+      totalPrice +=
+        Number.parseFloat(item.price) +
+        item.toppings.reduce(
+          (total, topping) => (total += Number.parseInt(topping.number) * 0.5),
+          0
+        );
+    });
+    let mongoOrder = new Order({
+      ...order,
+      customerId: user._id,
+      customerName: user.name,
+      orderPrice: totalPrice,
+      status: 'received',
+    });
+
+    const newOrder = await Order.create(mongoOrder);
+    sendTask.addTask('localhost', 'received-orders', newOrder);
     return res.status(201).json(newOrder);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -65,19 +83,18 @@ const deleteOrder = async (req, res) => {
     const id = req.params.id;
     const user = await User.findOne({ email: req.user.email });
     const order = await Order.find({ _id: id });
-    
+
     if (user._id !== order._id && user.role !== 'admin') {
       return res
-      .status(403)
-      .json({ message: 'You dont have permission to access' });
+        .status(403)
+        .json({ message: 'You dont have permission to access' });
     }
-    
+
     await Order.deleteOne({ _id: id });
     return res.status(204).end();
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
-
 
 module.exports = { getAllOrders, createOrder, getOrderUSer, deleteOrder };

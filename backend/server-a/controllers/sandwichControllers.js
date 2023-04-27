@@ -20,7 +20,7 @@ const getSandwich = async (req, res) => {
   try {
     const sandwich = await Sandwich.findById(req.params.sandwichId);
     if (!sandwich) {
-      return res.status(404).json({ messsage: 'Sandwich not found' }).end();
+      return res.status(404).json({ messsage: 'Sandwich not found' });
     }
     res.json(sandwich);
   } catch (err) {
@@ -93,15 +93,13 @@ const deleteSandwich = async (req, res) => {
     }
 
     const sandwich = await Sandwich.findByIdAndDelete(idSandwich);
-    // const sandwich = await Sandwich.find({ _id: idSandwich });
+
     if (sandwich === []) {
       return res.status(405).json({ message: 'Invalid input' });
     }
     if (!sandwich) {
-      return res.status(404).json({ messsage: 'Sandwich not found' }).end();
+      return res.status(404).json({ messsage: 'Sandwich not found' });
     }
-
-    // await Sandwich.deleteOne({ _id: idSandwich });
     return res.status(204).end();
   } catch (err) {
     res.status(400).json({ message: err.message });

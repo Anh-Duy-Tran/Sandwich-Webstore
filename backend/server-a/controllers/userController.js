@@ -23,7 +23,15 @@ const getAllUsers = async (req, res) => {
  * @param {*} res - the response object
  */
 const getUser = async (req, res) => {
-  res.json(req.user);
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: 'Invalid username' });
+  }
 };
 
 /**
@@ -120,7 +128,7 @@ const login = async (req, res) => {
 
     if (!user || user === undefined || !(await user.checkPassword(password))) {
       return res
-        .status(401)
+        .status(400)
         .json({ message: 'The username or password is incorrect.' });
     }
 
