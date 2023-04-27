@@ -61,18 +61,23 @@ const orderSchema = new Schema({
     type: Number,
     required: true,
   },
-  orderTime: {
-    type: String,
-    required: true,
-  },
-  receiveOrderTime: {
-    type: String,
-  },
-  inQueueTime: {
-    type: String,
-  },
-  doneTime: {
-    type: String,
+  time: {
+    orderTime: {
+      type: String,
+      required: true,
+    },
+    receiveOrderTime: {
+      type: String,
+      default: undefined,
+    },
+    inQueueTime: {
+      type: String,
+      default: undefined,
+    },
+    doneTime: {
+      type: String,
+      default: undefined,
+    },
   },
   // for items:
   items: {
