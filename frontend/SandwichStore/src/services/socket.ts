@@ -9,7 +9,7 @@ type UpdateData = {
 type SubscribeToOrders = (username: string, dispatch: Dispatch<Action>) => Socket;
 
 export const subscribeToOrders: SubscribeToOrders = (username, dispatch) => {
-  const socket = io('http://localhost:3000');
+  const socket = io('http://localhost:8080');
 
   socket.on(`update-${username}`, ({ orders }: UpdateData) => {
     dispatch({ type: 'set-orders', payload: orders });

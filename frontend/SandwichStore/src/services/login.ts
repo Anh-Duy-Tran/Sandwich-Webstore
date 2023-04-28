@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AxiosResponse } from "axios";
 
-const baseURL = "http://localhost:3000/api/v1/user/";
+const baseURL = "http://localhost:8080/api/v1/user/";
 
 const login = async (payload: { name: string; password: string }) => {
   const URL = `${baseURL}login`;

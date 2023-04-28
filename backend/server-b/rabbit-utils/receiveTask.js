@@ -36,7 +36,7 @@ module.exports.getTask = function (rabbitHost, queueName) {
           setTimeout(function () {
             console.log(new Date(), " [x] Done");
             // sendTask.addTask("rapid-runner-rabbit", "completed-orders", 123);
-            sendTask.addTask("localhost", "completed-orders", body);
+            sendTask.addTask("rapid-runner-rabbit", "completed-orders", body);
             ch.ack(msg);
           }, 10000);
         }

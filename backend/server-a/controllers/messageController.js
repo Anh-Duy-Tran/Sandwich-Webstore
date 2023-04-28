@@ -10,7 +10,10 @@ const orderAcked = async ( currentOrder ) => {
   try {
     const user = await User.findOne({ _id : currentOrder.customerId });
     const order = await Order.findOne({ _id: currentOrder._id });
+    
     order.status = "InQueue";
+    order.time.inQueueTime = new Date().toISOString();
+
     await order.save();
     socketController.updateData(user.name, await Order.find({ customerId : user._id }));
   } catch (error) {
@@ -23,7 +26,10 @@ const orderNacked = async ( currentOrder ) => {
   try {
     const user = await User.findOne({ _id : currentOrder.customerId });
     const order = await Order.findOne({ _id: currentOrder._id });
+    
     order.status = "Failed";
+    order.time.doneTime = new Date().toISOString();
+
     await order.save();
     socketController.updateData(user.name, await Order.find({ customerId : user._id }));
   } catch (error) {
@@ -36,7 +42,10 @@ const orderFilled = async ( currentOrder ) => {
   try {
     const user = await User.findOne({ _id : currentOrder.customerId });
     const order = await Order.findOne({ _id: currentOrder._id });
+    
     order.status = "Ready";
+    order.time.doneTime = new Date().toISOString();
+    
     await order.save();
     socketController.updateData(user.name, await Order.find({ customerId : user._id }));
   } catch (error) {

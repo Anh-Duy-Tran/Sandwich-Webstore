@@ -46,7 +46,6 @@ const createOrder = async (req, res) => {
     const order = {
       ...req.body,
     };
-    console.log(order.items);
     let totalPrice = 0;
     order.items.forEach((item) => {
       totalPrice +=
@@ -62,10 +61,14 @@ const createOrder = async (req, res) => {
       customerName: user.name,
       orderPrice: totalPrice,
       status: 'received',
+      time: {
+        ...order.time,
+        receiveOrderTime : new Date().toISOString()
+      }
     });
 
     const newOrder = await Order.create(mongoOrder);
-    sendTask.addTask('localhost', 'received-orders', newOrder);
+    sendTask.addTask('rapid-runner-rabbit', 'received-orders', newOrder);
     return res.status(201).json(newOrder);
   } catch (err) {
     res.status(400).json({ message: err.message });

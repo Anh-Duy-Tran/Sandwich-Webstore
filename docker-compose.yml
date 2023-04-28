@@ -21,7 +21,6 @@ services:
     # can be modified to be anything, but what is given should
     # work. Just uncomment them
     depends_on:
-      # -  mongodb
       -  rapid-runner-rabbit
     # command: ["node", "."]
     command: ["./utils/wait-for-it.sh", "rapid-runner-rabbit:5672", "--",  "npm", "start"]
@@ -32,15 +31,10 @@ services:
     # port 12345 of the host. Container port has been exposed
     # in the node:10 Docker Hub Dockerfile.
     ports:
-      - "12345:8080"
+      - "80:8080"
     networks:
       - backend
-    environment:
-      MONGODB_USER: admin
-      MONGODB_PASSWORD: password
-      MONGODB_DATABASE: WebShopDb
-      MONGODB_HOST: mongodb
-      MONGODB_PORT: 27017
+
 
   # You can base this service on the rabbitmq:3-management Docker Hub image.
   # You need to expose the RabbitMQ port 5672 to other containers

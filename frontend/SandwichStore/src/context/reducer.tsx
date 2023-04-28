@@ -1,6 +1,6 @@
 import { updateCart } from "../utils/cart";
 
-type OrderStatus = "ordered" | "received" | "inQueue" | "ready" | "failed";
+type OrderStatus = "Ordered" | "Received" | "InQueue" | "Ready" | "Failed";
 
 interface Topping {
   id: number;
@@ -11,6 +11,13 @@ interface ToppingUser {
   id: number;
   name: string;
   number: number;
+}
+
+interface Time {
+  orderTime: string;
+  receiveOrderTime: string;
+  inQueueTime: string;
+  doneTime: string;
 }
 
 export interface Sandwich {
@@ -38,203 +45,257 @@ export interface Order {
   customerId: string;
   items: SandwichUser[];
   status: OrderStatus;
+  activeStep: number;
+  customerName: string;
+  time: Time;
+  orderPrice: number;
 }
 
 export interface User {
-  name : string;
-  email : string;
-  role : "customer" | "admin";
+  name: string;
+  email: string;
+  role: "customer" | "admin";
 }
 
 const mapToppingsToToppingsUser = (toppings: Topping[]): ToppingUser[] => {
-  return toppings.map((topping : Topping) : ToppingUser => ({ id: topping.id, name: topping.name, number : 0 }));
-}
+  return toppings.map(
+    (topping: Topping): ToppingUser => ({
+      id: topping.id,
+      name: topping.name,
+      number: 0,
+    })
+  );
+};
 
 const convertSandwichToSandwichUser = (sandwich: Sandwich): SandwichUser => {
-  const { _id, name, price, image, description, toppings, breadType } = sandwich;
-  return { _id, name, price, image, description, toppings: mapToppingsToToppingsUser(toppings), breadType };
-}
+  const { _id, name, price, image, description, toppings, breadType } =
+    sandwich;
+  return {
+    _id,
+    name,
+    price,
+    image,
+    description,
+    toppings: mapToppingsToToppingsUser(toppings),
+    breadType,
+  };
+};
 
-
-const modifyToppingUser = (sandwich : SandwichUser, id : number, number : number): SandwichUser => {
+const modifyToppingUser = (
+  sandwich: SandwichUser,
+  id: number,
+  number: number
+): SandwichUser => {
   const newTopping = [...sandwich.toppings];
   newTopping[id].number += number;
   newTopping[id].number = newTopping[id].number < 0 ? 0 : newTopping[id].number;
-  return { ...sandwich, toppings : newTopping};
-}
+  return { ...sandwich, toppings: newTopping };
+};
 
-
-export type Action = 
-  | { type: "set-sandwiches", payload: Sandwich[] }
-  | { type: "set-current-sandwich", payload: Sandwich | undefined }
+export type Action =
+  | { type: "set-sandwiches"; payload: Sandwich[] }
+  | { type: "set-current-sandwich"; payload: Sandwich | undefined }
   | { type: "open-login" }
   | { type: "close-login" }
-  | { type : "login-failed", payload : string }
-  | { type : "set-snackbar-message", payload : string }
-  | { type : "clear-login-message" }
-  | { type : "close-snackbar" }
-  | { type : "set-user", payload : User | null }
-  | { type : "set-current-topping", id : number, number : number}
-  | { type : "set-cart", payload : SandwichUser[]}
-  | { type : "add-to-cart" }
-  | { type : "togle-cart" }
-  | { type : "remove-item-cart", id : number }
-  | { type : "set-orders", payload : Order[] }
+  | { type: "login-failed"; payload: string }
+  | { type: "set-snackbar-message"; payload: string }
+  | { type: "clear-login-message" }
+  | { type: "close-snackbar" }
+  | { type: "set-user"; payload: User | null }
+  | { type: "set-current-topping"; id: number; number: number }
+  | { type: "set-cart"; payload: SandwichUser[] }
+  | { type: "add-to-cart" }
+  | { type: "togle-cart" }
+  | { type: "remove-item-cart"; id: number }
+  | { type: "set-orders"; payload: Order[] };
 
 export const reducer = (
   state: StoreStateType,
   action: Action
-) : StoreStateType => {
-
+): StoreStateType => {
   switch (action.type) {
     case "set-sandwiches": {
       return {
         ...state,
-        sandwiches: [ ...action.payload ]
-      }
+        sandwiches: [...action.payload],
+      };
     }
 
-    case "open-login" : {
+    case "open-login": {
       return {
         ...state,
-        openLogin : true
-      }
+        openLogin: true,
+      };
     }
 
-    case "close-login" : {
+    case "close-login": {
       return {
         ...state,
-        openLogin : false
-      }
+        openLogin: false,
+      };
     }
 
-    case "clear-login-message" : {
+    case "clear-login-message": {
       return {
         ...state,
-        loginMessage: null
-      }
+        loginMessage: null,
+      };
     }
 
-    case "login-failed" : {
+    case "login-failed": {
       return {
         ...state,
-        loginMessage : action.payload
-      }
+        loginMessage: action.payload,
+      };
     }
 
-    case "set-snackbar-message" : {
+    case "set-snackbar-message": {
       return {
         ...state,
         snackOpen: true,
-        snackMessage: action.payload
-      }
+        snackMessage: action.payload,
+      };
     }
 
-    case "close-snackbar" : {
+    case "close-snackbar": {
       return {
         ...state,
-        snackOpen: false
-      }
+        snackOpen: false,
+      };
     }
 
-    case "set-user" : {
+    case "set-user": {
       return {
         ...state,
-        user : action.payload
-      }
+        user: action.payload,
+      };
     }
 
-    case "set-current-sandwich" : {
+    case "set-current-sandwich": {
       return {
         ...state,
-        currentSandwich : action.payload ? convertSandwichToSandwichUser(action.payload) : undefined
-      }
+        currentSandwich: action.payload
+          ? convertSandwichToSandwichUser(action.payload)
+          : undefined,
+      };
     }
 
-    case "set-current-topping" : {
+    case "set-current-topping": {
       return {
         ...state,
-        currentSandwich : state.currentSandwich ? modifyToppingUser(state.currentSandwich, action.id, action.number) : undefined
-      }
+        currentSandwich: state.currentSandwich
+          ? modifyToppingUser(state.currentSandwich, action.id, action.number)
+          : undefined,
+      };
     }
 
-    case "set-cart" : {
+    case "set-cart": {
       updateCart(action.payload);
       return {
         ...state,
-        cart : action.payload
-      }
+        cart: action.payload,
+      };
     }
 
-    case "add-to-cart" : {
+    case "add-to-cart": {
       const newCart = [...state.cart];
       newCart.push(state.currentSandwich!);
       updateCart(newCart);
 
       return {
         ...state,
-        cart : newCart
-      }
+        cart: newCart,
+      };
     }
 
-    case "togle-cart" : {
+    case "togle-cart": {
       return {
         ...state,
-        openCart : !state.openCart
-      }
+        openCart: !state.openCart,
+      };
     }
 
-    case "remove-item-cart" : {
+    case "remove-item-cart": {
       const newCart = [...state.cart];
       newCart.splice(action.id, 1);
       updateCart(newCart);
 
       return {
         ...state,
-        cart : newCart
-      }
+        cart: newCart,
+      };
     }
 
-    case "set-orders" : {
+    case "set-orders": {
       return {
         ...state,
-        orders : action.payload
-      }
+        orders: action.payload.map((order) => {
+          let step = 0;
+          switch (order.status) {
+            case "Ordered":
+            step = 1;
+              break;
+
+            case "Received":
+              step = 2;
+              break;
+
+            case "InQueue":
+              step = 3;
+              break;
+
+            case "Ready":
+              step = 4;
+              break;
+
+            case "Failed":
+              step = 4;
+              break;
+
+            default:
+              break;
+          }
+
+          return {
+            ...order,
+            activeStep : step
+          }
+        }),
+      };
     }
 
     default:
       return {
-        ...state
-      }
+        ...state,
+      };
   }
-}
+};
 
 export interface StoreStateType {
   openLogin: boolean;
-  openCart : boolean;
-  snackOpen : boolean;
+  openCart: boolean;
+  snackOpen: boolean;
 
-  loginMessage : string | null;
-  sandwiches : Array<Sandwich>;
-  username : string | null;
-  snackMessage : string;
-  user : User | null;
-  currentSandwich : SandwichUser | undefined;
-  cart : SandwichUser[];
-  orders : Order[];
+  loginMessage: string | null;
+  sandwiches: Array<Sandwich>;
+  username: string | null;
+  snackMessage: string;
+  user: User | null;
+  currentSandwich: SandwichUser | undefined;
+  cart: SandwichUser[];
+  orders: Order[];
 }
 
 export const initialState: StoreStateType = {
   openLogin: false,
   sandwiches: [],
-  loginMessage : null,
+  loginMessage: null,
   username: null,
   snackOpen: false,
-  snackMessage : "",
+  snackMessage: "",
   user: null,
   currentSandwich: undefined,
-  cart : [],
-  openCart : false,
-  orders : []
-}
-
+  cart: [],
+  openCart: false,
+  orders: [],
+};

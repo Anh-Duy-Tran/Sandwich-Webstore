@@ -7,8 +7,8 @@ const app = require('./app');
 const { getTask } = require('./rabbit-utils/receiveTask');
 const { socketConnection } = require('./utils/socket-io');
 
-// const rabbitReceiver = getTask('rapid-runner-rabbit', 'completed-orders');
-const rabbitReceiver = getTask('localhost', 'completed-orders');
+const rabbitReceiver = getTask('rapid-runner-rabbit', 'completed-orders');
+// const rabbitReceiver = getTask('localhost', 'completed-orders');
 
 const server = http.createServer(app);
 socketConnection(server);
